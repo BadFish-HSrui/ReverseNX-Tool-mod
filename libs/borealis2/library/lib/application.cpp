@@ -235,6 +235,24 @@ bool Application::init(std::string title, Style style, Theme theme)
             Application::fontStash.regular = Application::loadFontFromMemory("regular", font.address, font.size, false);
         }
 
+        // Chinese Simplified font
+        rc = plGetSharedFontByType(&font, PlSharedFontType_ChineseSimplified);
+        if (R_SUCCEEDED(rc))
+        {
+            Logger::info("Adding Switch shared Chinese Simplified font");
+            Application::fontStash.chinese = Application::loadFontFromMemory("chinese", font.address, font.size, false);
+            nvgAddFallbackFontId(Application::vg, Application::fontStash.regular, Application::fontStash.chinese);
+        }
+
+        // Chinese Traditional font
+        rc = plGetSharedFontByType(&font, PlSharedFontType_ChineseTraditional);
+        if (R_SUCCEEDED(rc))
+        {
+            Logger::info("Adding Switch shared Chinese Traditional font");
+            Application::fontStash.chinese = Application::loadFontFromMemory("chinese", font.address, font.size, false);
+            nvgAddFallbackFontId(Application::vg, Application::fontStash.regular, Application::fontStash.chinese);
+        }
+
         // Korean font
         rc = plGetSharedFontByType(&font, PlSharedFontType_KO);
         if (R_SUCCEEDED(rc))
